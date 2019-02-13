@@ -1,7 +1,7 @@
 import QETagWorker from "../src/worker";
 import QZFile from "../src/file";
 import WorkerProvider from 'worker-provider';
-import {handler} from '../src/workerscript';
+import {handler} from '../src/wscript';
 
 class Worker {
     public path: string;

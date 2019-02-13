@@ -3,7 +3,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = function() {
     return {
-        entry: './src/workerscript.ts',
+        entry: './src/wscript.ts',
         devtool: false,
         resolve: {
             extensions: ['.ts', '.js'],
