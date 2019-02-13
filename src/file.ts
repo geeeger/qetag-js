@@ -3,7 +3,7 @@ import {
     IQZFile,
 } from "./interface";
 
-import Block from "./mblock";
+import Block from "./block";
 import { guid } from "./utils";
 
 const rExt = /\.([^.]+)$/;
