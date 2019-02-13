@@ -1,7 +1,7 @@
-import QETagWorker from "../src/worker";
+import WorkerProvider from "worker-provider";
 import QZFile from "../src/file";
-import WorkerProvider from 'worker-provider';
-import {handler} from '../src/wscript';
+import QETagWorker from "../src/worker";
+import {handler} from "../src/wscript";
 
 class Worker {
     public path: string;
@@ -37,35 +37,35 @@ declare var window: IWindow;
 
 window.Worker = Worker;
 
-const fakepath = '';
+const fakepath = "";
 
 jest.setTimeout(10000);
 
 const workers = new WorkerProvider(fakepath);
 
-it('QETagWorker', (done) => {
+it("QETagWorker", (done) => {
 
     const file = new QZFile({
-        file: new File(['1'], '', {type: 'text/html'})
+        file: new File(["1"], "", {type: "text/html"}),
     });
 
     const qetag = new QETagWorker(file, workers);
     qetag.get()
         .then((hash) => {
-            expect(hash).toBe('FjVqGSt5E7BMVFdNGMKNRuY5VCir');
+            expect(hash).toBe("FjVqGSt5E7BMVFdNGMKNRuY5VCir");
             done();
         });
 });
 
-it('QETagWorker 1', (done) => {
+it("QETagWorker 1", (done) => {
 
     const file = new QZFile({
-        file: new File([new ArrayBuffer(4 * 1024 * 1024 * 4)], '', {type: 'text/html'})
+        file: new File([new ArrayBuffer(4 * 1024 * 1024 * 4)], "", {type: "text/html"}),
     });
     const qetag = new QETagWorker(file, workers);
     qetag.get()
         .then((hash) => {
-            expect(hash).toBe('lmJbxJndAg_pUzKSz0BqeL9_RFus');
+            expect(hash).toBe("lmJbxJndAg_pUzKSz0BqeL9_RFus");
             done();
         });
 });
