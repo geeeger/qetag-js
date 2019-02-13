@@ -8,7 +8,6 @@
   ],
   "description": "a manager for worker",
   "main": "lib/index.js",
-  "module": "src/index.ts",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "npm run worker-build && jest --coverage",
