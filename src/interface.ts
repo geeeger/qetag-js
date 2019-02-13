@@ -1,4 +1,3 @@
-import { WordArray } from "crypto-js";
 import { IWorkersProvider } from "worker-provider/lib/interface";
 
 export interface IQZFile {

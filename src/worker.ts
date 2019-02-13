@@ -1,13 +1,14 @@
 import Base64 = require("crypto-js/enc-base64");
 import LibWordArray = require("crypto-js/lib-typedarrays");
 import SHA1 = require("crypto-js/sha1");
+import log2 from "math-log2";
 import { IWorkersProvider } from "worker-provider/lib/interface";
+import QETagBase from "./base";
 import {
     IBlock,
     IQETagWorker,
     IQZFile,
 } from "./interface";
-import QETagBase from "./QETagBase";
 import { guid } from "./utils";
 
 export default class QETagWorker extends QETagBase implements IQETagWorker {
@@ -40,7 +41,7 @@ export default class QETagWorker extends QETagBase implements IQETagWorker {
                 hashsLength++;
                 if (hashsLength === blocksLength) {
                     hashs = hashs.map((hash: string) => Base64.parse(hash));
-                    let perfex = Math.log2(this.file.blockSize);
+                    let perfex = log2(this.file.blockSize);
                     const isSmallFile = hashsLength === 1;
                     let result = null;
                     if (isSmallFile) {

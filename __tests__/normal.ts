@@ -1,5 +1,5 @@
-import QETagNormal from "../src/QETagNormal";
-import QZFile from "../src/QZFile";
+import QETagNormal from "../src/normal";
+import QZFile from "../src/file";
 import * as bluebird from "bluebird";
 
 const file = new QZFile({

@@ -3,7 +3,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = function() {
     return {
-        entry: './src/WorkerScript.ts',
+        entry: './src/workerscript.ts',
         devtool: 'source-map',
         mode: "production",
         resolve: {

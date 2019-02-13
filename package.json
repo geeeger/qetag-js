@@ -7,20 +7,19 @@
     "src/"
   ],
   "description": "a manager for worker",
-  "main": "lib/",
+  "main": "lib/index.js",
+  "module": "src/index.ts",
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "npm run worker-build && jest --coverage",
     "test:watch": "jest -- --watch --no-cache",
     "lint": "tslint --project tsconfig.json",
     "lint:fix": "tslint --fix --project tsconfig.json",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production",
-    "build": "npm run build:dev && npm run build:prod",
+    "build": "npm run worker-build && webpack",
     "clean": "rimraf lib coverage worker",
     "codecov": "codecov",
     "preversion": "npm run clean && npm test",
-    "worker-build": "webpack --config webpack.worker.config.js",
+    "worker-build": "webpack --config webpack.worker.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "version": "npm run build && git add -A lib && npm run changelog",
     "postversion": "git push --tags origin"
@@ -68,6 +67,7 @@
   },
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "math-log2": "^1.0.1",
     "throat": "^4.1.0",
     "worker-provider": "^1.4.1"
   }

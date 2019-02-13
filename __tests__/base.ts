@@ -1,5 +1,5 @@
-import Base from "../src/QETagBase";
-import QZFile from "../src/QZFile";
+import Base from "../src/base";
+import QZFile from "../src/file";
 
 it('QETagBase', () => {
     const file = new QZFile({

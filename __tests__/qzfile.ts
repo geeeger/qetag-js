@@ -1,4 +1,4 @@
-import QZFile from "../src/QZFile";
+import QZFile from "../src/file";
 
 it('should throw error if file ref doesn\'t exist', () => {
     const errorthrow = () => {

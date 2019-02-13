@@ -2,13 +2,14 @@ import { WordArray } from "crypto-js";
 import Base64 = require("crypto-js/enc-base64");
 import LibWordArray = require("crypto-js/lib-typedarrays");
 import SHA1 = require("crypto-js/sha1");
+import log2 from "math-log2";
 import throat from "throat";
+import QETagBase from "./base";
 import {
     IBlock,
     IQETagNormal,
     IQZFile,
 } from "./interface";
-import QETagBase from "./QETagBase";
 
 export default class QETagNormal extends QETagBase implements IQETagNormal {
     public concurrency: number;
@@ -52,7 +53,7 @@ export default class QETagNormal extends QETagBase implements IQETagNormal {
                 .map(throat(Promise).apply(this, [this.concurrency, (block: IBlock) => this.loadNext(block)])),
         )
             .then((hashs: any[]) => {
-                let perfex = Math.log2(this.file.blockSize);
+                let perfex = log2(this.file.blockSize);
                 const isSmallFile = hashs.length === 1;
                 let hash = null;
                 if (isSmallFile) {

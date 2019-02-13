@@ -1,6 +1,6 @@
 import { IWorkersProvider } from "worker-provider/lib/interface";
+import QETagBase from "./base";
 import { IQETagWorker, IQZFile } from "./interface";
-import QETagBase from "./QETagBase";
 export default class QETagWorker extends QETagBase implements IQETagWorker {
     workers: IWorkersProvider;
     channel: string;
