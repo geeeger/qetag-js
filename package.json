@@ -15,11 +15,11 @@
     "test:watch": "jest -- --watch --no-cache",
     "lint": "tslint --project tsconfig.json",
     "lint:fix": "tslint --fix --project tsconfig.json",
-    "build": "npm run worker-build && webpack",
+    "build": "npm run worker-build && webpack --mode production",
     "clean": "rimraf lib coverage worker",
     "codecov": "codecov",
     "preversion": "npm run clean && npm test",
-    "worker-build": "webpack --config webpack.worker.js",
+    "worker-build": "webpack --config webpack.worker.js --mode production",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "version": "npm run build && git add -A lib && npm run changelog",
     "postversion": "git push --tags origin"

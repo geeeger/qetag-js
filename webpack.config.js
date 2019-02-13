@@ -2,8 +2,8 @@ const path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const config = {
-    mode: "production",
     entry: "./src/index.ts",
+    devtool: false,
     resolve: {
         extensions: [".ts", ".js"],
     },
