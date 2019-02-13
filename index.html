@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+    <script src="./lib/index.js"></script>
+</head>
+<body>
+    <input type="file" id="f">
+    <h3>use normal pattern to cacl qetag</h5>
+    <input type="button" value="cacl it" id="b1">
+    <h5>result:</h5>
+    <div id="r1"></div>
+    <h3>use worker pattern to cacl qetag</h3>
+    <input type="button" value="cacl it" id="b2">
+    <h5>result:</h5>
+    <div id="r2"></div>
+    <script>
+        var f = document.querySelector('#f');
+        var b1 = document.querySelector('#b1');
+        var r1 = document.querySelector('#r1');
+        var b2 = document.querySelector('#b2');
+        var r2 = document.querySelector('#r2');
+
+        var QFile = window.Qetag.File;
+        var utils = window.Qetag.utils;
+
+        function fileToString(file) {
+            var r = '<table>';
+            for (var key in file) {
+                if (typeof file[key] !== 'function') {
+                    r += '<tr>';
+                    if (key === 'blocks') {
+                        r += '<td>blocksNumber</td><td>' + file[key].length + '</td>';
+                    }
+                    else {
+                        r += '<td>' + key + '</td><td>' + file[key] + '</td>';
+                    }
+                    r += '</tr>';
+                }
+            }
+            return r + '</table>';
+        }
+
+        b1.onclick = function () {
+            if (r1.innerHTML === 'waiting') {
+                return;
+            }
+
+            if (!f.files[0]) {
+                alert('no file selected!');
+                return;
+            }
+
+            r1.innerHTML = 'waiting';
+            var Qetag = window.Qetag.Normal;
+            var file = new QFile({
+                file: f.files[0],
+                blockSize: 4 * 1024 * 1024,
+                batch: utils.guid()
+            });
+            var qetag = new Qetag(file, /* concurrency */25);
+            var t = new Date();
+            qetag
+                .get()
+                .then(function (hash) {
+                    var result = fileToString(file);
+                    result += 'qetag:' + hash + '<br>';
+                    result += 'time:' + (new Date() - t);
+                    r1.innerHTML = result;
+                })
+                .catch(function (e) {
+                    r1.innerHTML = e;
+                });
+        };
+
+        var WorkerProvider = window.Qetag.WorkerProvider;
+
+        var workers = new WorkerProvider('./worker/index.js');
+
+        b2.onclick = function () {
+            if (r2.innerHTML === 'waiting') {
+                return;
+            }
+
+            if (!f.files[0]) {
+                alert('no file selected!');
+                return;
+            }
+
+            r2.innerHTML = 'waiting';
+            var Qetag = window.Qetag.Worker;
+            var file = new QFile({
+                file: f.files[0],
+                blockSize: 4 * 1024 * 1024,
+                batch: utils.guid()
+            });
+            var t = new Date();
+            var qetag = new Qetag(file, workers);
+            qetag
+                .get()
+                .then(function (hash) {
+                    var result = fileToString(file);
+                    result += 'qetag:' + hash + '<br>';
+                    result += 'time:' + (new Date() - t);
+                    r2.innerHTML = result;
+                })
+                .catch(function (e) {
+                    r2.innerHTML = e;
+                });
+        }
+    </script>
+</body>
+</html>
