@@ -6,7 +6,7 @@
 
 ## Usage
 
-
+See [https://geeeger.github.io/qetag-js/index.html](https://geeeger.github.io/qetag-js/index.html)
 
 ## ChangeLog
 
