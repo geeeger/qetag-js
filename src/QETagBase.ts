@@ -1,22 +1,22 @@
 import {
-    IQZFile, IQETagBase,
-} from './interface';
+    IQETagBase, IQZFile,
+} from "./interface";
 
 export default class QETagBase implements IQETagBase {
-    file: IQZFile;
-    hash: string;
 
-    static Promise:any | PromiseConstructor | PromiseConstructorLike = Promise;
+    public static Promise: any | PromiseConstructor | PromiseConstructorLike = Promise;
+    public file: IQZFile;
+    public hash: string;
     constructor(file: IQZFile) {
         this.file = file;
-        this.hash = '';
+        this.hash = "";
     }
 
-    set(hash: string) {
+    public set(hash: string) {
         this.hash = hash;
     }
 
-    getSync() {
+    public getSync() {
         return this.hash;
     }
 }

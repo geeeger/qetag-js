@@ -1,12 +1,12 @@
 import {
+    IBlock,
     IQZFile,
-    IBlock
-} from './interface';
+} from "./interface";
 
 export default class Block implements IBlock {
-    startByte: number;
-    endByte: number;
-    file: IQZFile;
+    public startByte: number;
+    public endByte: number;
+    public file: IQZFile;
     constructor(file: IQZFile, startByte: number, endByte: number) {
         this.file = file;
         this.startByte = startByte;

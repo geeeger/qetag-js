@@ -1,56 +1,55 @@
+import { WordArray } from "crypto-js";
+import Base64 = require("crypto-js/enc-base64");
+import LibWordArray = require("crypto-js/lib-typedarrays");
+import SHA1 = require("crypto-js/sha1");
+import throat from "throat";
 import {
-    IQZFile,
     IBlock,
-    IQETagNormal
-} from './interface';
-import QETagBase from './QETagBase';
-const throatMaker = require('throat');
-import Base64 = require('crypto-js/enc-base64');
-import LibWordArray = require('crypto-js/lib-typedarrays');
-import SHA1 = require('crypto-js/sha1');
-import { WordArray } from 'crypto-js';
+    IQETagNormal,
+    IQZFile,
+} from "./interface";
+import QETagBase from "./QETagBase";
 
 export default class QETagNormal extends QETagBase implements IQETagNormal {
-    concurrency: number;
-    
+    public concurrency: number;
+
     constructor(file: IQZFile, concurrency: number = 1) {
         super(file);
         this.concurrency = concurrency;
     }
 
-    loadNext(block: IBlock): PromiseLike<WordArray> {
+    public loadNext(block: IBlock): PromiseLike<WordArray> {
         const Promise = QETagNormal.Promise;
-        return new Promise((resolve/*, reject*/) => {
+        return new Promise((resolve, reject) => {
             const fr = new FileReader();
             fr.onload = () => {
-                // if (fr.result) {
+                if (fr.result) {
                     const wordarray = LibWordArray.create(fr.result);
                     const sha1 = SHA1(wordarray);
                     resolve(sha1);
-                // } else {
-                //     reject(new Error('Read file error!'));
-                // }
+                } else {
+                    reject(new Error("Read file error!"));
+                }
             };
             fr.onloadend = () => {
                 fr.onloadend = fr.onload = fr.onerror = null;
             };
-            // fr.onerror = () => {
-            //     reject(new Error('Read file error!'));
-            // };
+            fr.onerror = () => {
+                reject(new Error("Read file error!"));
+            };
             fr.readAsArrayBuffer(block.blob);
         });
     }
 
-    get(): PromiseLike<string> {
+    public get(): PromiseLike<string> {
         const Promise = QETagNormal.Promise;
         if (this.hash) {
             return Promise.resolve(this.hash);
         }
-        let throat = throatMaker(Promise);
         return Promise.all(
             this.file
                 .getBlocks()
-                .map(throat(this.concurrency, (block: IBlock) => this.loadNext(block)))
+                .map(throat(Promise).apply(this, [this.concurrency, (block: IBlock) => this.loadNext(block)])),
         )
             .then((hashs: any[]) => {
                 let perfex = Math.log2(this.file.blockSize);
@@ -69,8 +68,8 @@ export default class QETagNormal extends QETagBase implements IQETagNormal {
                 hash = LibWordArray.create(byte).concat(hash);
                 hash = hash
                     .toString(Base64)
-                    .replace(/\//g, '_')
-                    .replace(/\+/g, '-');
+                    .replace(/\//g, "_")
+                    .replace(/\+/g, "-");
 
                 this.hash = hash;
                 return hash;

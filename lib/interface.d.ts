@@ -1,6 +1,4 @@
-import { WordArray } from "crypto-js";
 import { IWorkersProvider } from "worker-provider/lib/interface";
-
 export interface IQZFile {
     file: File;
     batch: string;
@@ -15,7 +13,6 @@ export interface IQZFile {
     getBlocks(): IBlock[];
     getBlockByIndex(index: number): IBlock;
 }
-
 export interface IBlock {
     startByte: number;
     endByte: number;
@@ -24,7 +21,6 @@ export interface IBlock {
     size?: number;
     blob?: Blob;
 }
-
 export interface IQETagBase {
     file: IQZFile;
     hash: string;
@@ -32,11 +28,9 @@ export interface IQETagBase {
     set(hash: string): void;
     getSync(): string;
 }
-
 export interface IQETagNormal extends IQETagBase {
     concurrency: number;
 }
-
 export interface IQETagWorker extends IQETagBase {
     channel: string;
     workers: IWorkersProvider;

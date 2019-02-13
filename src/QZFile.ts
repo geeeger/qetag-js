@@ -1,26 +1,24 @@
 import {
+    IBlock,
     IQZFile,
-    IBlock
-} from './interface';
+} from "./interface";
 
-import Block from './Block';
-import { guid } from './utils';
+import Block from "./Block";
+import { guid } from "./utils";
 
 const rExt = /\.([^.]+)$/;
 let uid = 1;
 
-
-
 export default class QZFile implements IQZFile {
-    file: File;
-    batch: string;
-    blockSize: number;
-    blocks: IBlock[];
-    name: string;
-    lastModified: number;
-    ext: string;
-    size: number;
-    type: string;
+    public file: File;
+    public batch: string;
+    public blockSize: number;
+    public blocks: IBlock[];
+    public name: string;
+    public lastModified: number;
+    public ext: string;
+    public size: number;
+    public type: string;
 
     constructor({
         file = null,
@@ -34,30 +32,30 @@ export default class QZFile implements IQZFile {
         this.blockSize = blockSize;
         this.batch = batch;
         this.size = file.size;
-        this.name = file.name || 'unknown_' + uid++;
+        this.name = file.name || "unknown_" + uid++;
         this.lastModified = file.lastModified || new Date().getTime();
-        let ext = rExt.exec(file.name) ? RegExp.$1.toLowerCase() : '';
+        let ext = rExt.exec(file.name) ? RegExp.$1.toLowerCase() : "";
         if (!ext && file.type) {
-            ext = /\/(jpg|jpeg|png|gif|bmp)$/i.exec(file.type) ? RegExp.$1.toLowerCase() : '';
+            ext = /\/(jpg|jpeg|png|gif|bmp)$/i.exec(file.type) ? RegExp.$1.toLowerCase() : "";
             if (ext) {
-                this.name += '.' + ext;
+                this.name += "." + ext;
             }
         }
         this.ext = ext;
-        if (!file.type && this.ext && ~'jpg,jpeg,png,gif,bmp'.indexOf(this.ext)) {
-            this.type = 'image/' + (this.ext === 'jpg' ? 'jpeg' : this.ext);
+        if (!file.type && this.ext && ~"jpg,jpeg,png,gif,bmp".indexOf(this.ext)) {
+            this.type = "image/" + (this.ext === "jpg" ? "jpeg" : this.ext);
         } else {
-            this.type = file.type || 'application/octet-stream';
+            this.type = file.type || "application/octet-stream";
         }
     }
 
-    slice(start: number, end: number): Blob {
+    public slice(start: number, end: number): Blob {
         const file = this.file;
         const slice = file.slice;
         return slice.call(file, start, end);
     }
 
-    getBlocks(): IBlock[] {
+    public getBlocks(): IBlock[] {
         if (this.blocks) {
             return this.blocks;
         }
@@ -75,7 +73,7 @@ export default class QZFile implements IQZFile {
         return blocks;
     }
 
-    getBlockByIndex(index: number): IBlock {
+    public getBlockByIndex(index: number): IBlock {
         return this.getBlocks()[index];
     }
 }

@@ -2,22 +2,25 @@
   "name": "qetag-js",
   "version": "0.0.1",
   "files": [
-    "lib/"
+    "lib/",
+    "worker/",
+    "src/"
   ],
   "description": "a manager for worker",
-  "main": "lib/qetag.min.js",
+  "main": "lib/",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "npm run worker-build && jest --coverage",
     "test:watch": "jest -- --watch --no-cache",
     "lint": "tslint --project tsconfig.json",
     "lint:fix": "tslint --fix --project tsconfig.json",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production",
     "build": "npm run build:dev && npm run build:prod",
-    "clean": "rimraf lib coverage",
+    "clean": "rimraf lib coverage worker",
     "codecov": "codecov",
-    "preversion": "npm test",
+    "preversion": "npm run clean && npm test",
+    "worker-build": "webpack --config webpack.worker.config.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "version": "npm run build && git add -A lib && npm run changelog",
     "postversion": "git push --tags origin"
