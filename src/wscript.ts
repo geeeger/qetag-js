@@ -4,9 +4,9 @@ import SHA1 = require("crypto-js/sha1");
 
 const postMessageFunction = self.postMessage;
 
-export function sha1(payload, channel, postMessage) {
+export function sha1(payload, channel, postMessage): void {
     const fr = new FileReader();
-    fr.onload = () => {
+    fr.onload = (): void => {
         if (fr.result) {
             const wordarray = WordArray.create(fr.result);
             const sha1hash = SHA1(wordarray).toString(Base64);
@@ -19,20 +19,20 @@ export function sha1(payload, channel, postMessage) {
             });
         }
     };
-    fr.onerror = () => {
+    fr.onerror = (): void => {
         postMessage({
             channel,
             error: "error",
             payload: "Read file error",
         });
     };
-    fr.onloadend = () => {
+    fr.onloadend = (): void => {
         fr.onloadend = fr.onload = fr.onerror = null;
     };
     fr.readAsArrayBuffer(payload.blob);
 }
 
-export function handler(data: any, postMessage) {
+export function handler(data: any, postMessage): void {
     const { payload, channel } = data;
 
     if (typeof FileReader === "undefined") {
@@ -47,6 +47,6 @@ export function handler(data: any, postMessage) {
     sha1(payload, channel, postMessage);
 }
 
-self.onmessage = (event: MessageEvent) => {
+self.onmessage = (event: MessageEvent): void => {
     handler(event.data, postMessageFunction);
 };

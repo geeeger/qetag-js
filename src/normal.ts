@@ -5,25 +5,21 @@ import SHA1 = require("crypto-js/sha1");
 import log2 from "math-log2";
 import throat from "throat";
 import QETagBase from "./base";
-import {
-    IBlock,
-    IQETagNormal,
-    IQZFile,
-} from "./interface";
+import * as Interface from "./interface";
 
-export default class QETagNormal extends QETagBase implements IQETagNormal {
+export default class QETagNormal extends QETagBase implements Interface.QETagNormal {
     public concurrency: number;
 
-    constructor(file: IQZFile, concurrency: number = 1) {
+    constructor(file: Interface.QZFile, concurrency: number = 1) {
         super(file);
         this.concurrency = concurrency;
     }
 
-    public loadNext(block: IBlock): PromiseLike<WordArray> {
+    public loadNext(block: Interface.Block): PromiseLike<WordArray> {
         const Promise = QETagNormal.Promise;
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             const fr = new FileReader();
-            fr.onload = () => {
+            fr.onload = (): void => {
                 if (fr.result) {
                     const wordarray = LibWordArray.create(fr.result);
                     const sha1 = SHA1(wordarray);
@@ -32,10 +28,10 @@ export default class QETagNormal extends QETagBase implements IQETagNormal {
                     reject(new Error("Read file error!"));
                 }
             };
-            fr.onloadend = () => {
+            fr.onloadend = (): void => {
                 fr.onloadend = fr.onload = fr.onerror = null;
             };
-            fr.onerror = () => {
+            fr.onerror = (): void => {
                 reject(new Error("Read file error!"));
             };
             fr.readAsArrayBuffer(block.blob);
@@ -50,9 +46,11 @@ export default class QETagNormal extends QETagBase implements IQETagNormal {
         return Promise.all(
             this.file
                 .getBlocks()
-                .map(throat(Promise).apply(this, [this.concurrency, (block: IBlock) => this.loadNext(block)])),
+                // @ts-ignore
+                .map(throat(Promise).apply(this, [this.concurrency, (block: Interface.Block): PromiseLike<WordArray> => this.loadNext(block)])),
         )
-            .then((hashs: any[]) => {
+            // eslint-disable-next-line
+            .then((hashs: any[]): string => {
                 let perfex = log2(this.file.blockSize);
                 const isSmallFile = hashs.length === 1;
                 let hash = null;
@@ -60,7 +58,7 @@ export default class QETagNormal extends QETagBase implements IQETagNormal {
                     hash = hashs[0];
                 } else {
                     perfex = 0x80 | perfex;
-                    hash = hashs.reduce((a, b) => a.concat(b));
+                    hash = hashs.reduce((a, b): WordArray[] => a.concat(b));
                     hash = SHA1(hash);
                 }
                 const byte = new ArrayBuffer(1);

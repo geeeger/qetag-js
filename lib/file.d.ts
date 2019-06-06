@@ -1,9 +1,9 @@
-import { IBlock, IQZFile } from "./interface";
-export default class QZFile implements IQZFile {
+import * as Interface from "./interface";
+export default class QZFile implements Interface.QZFile {
     file: File;
     batch: string;
     blockSize: number;
-    blocks: IBlock[];
+    blocks: Interface.Block[];
     name: string;
     lastModified: number;
     ext: string;
@@ -15,6 +15,6 @@ export default class QZFile implements IQZFile {
         batch?: string;
     });
     slice(start: number, end: number): Blob;
-    getBlocks(): IBlock[];
-    getBlockByIndex(index: number): IBlock;
+    getBlocks(): Interface.Block[];
+    getBlockByIndex(index: number): Interface.Block;
 }

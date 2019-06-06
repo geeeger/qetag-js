@@ -1,9 +1,9 @@
-import { IQETagBase, IQZFile } from "./interface";
-export default class QETagBase implements IQETagBase {
-    static Promise: any | PromiseConstructor | PromiseConstructorLike;
-    file: IQZFile;
+import * as Interface from "./interface";
+export default class QETagBase implements Interface.QETagBase {
+    static Promise: PromiseConstructor & PromiseConstructorLike;
+    file: Interface.QZFile;
     hash: string;
-    constructor(file: IQZFile);
+    constructor(file: Interface.QZFile);
     set(hash: string): void;
     getSync(): string;
 }

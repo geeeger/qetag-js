@@ -1,0 +1,10 @@
+{
+    "extends": ["plugin:@typescript-eslint/recommended"],
+    "rules": {
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 4],
+        "no-bitwise": 0,
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+    }
+}

@@ -23,7 +23,7 @@ const config = {
             {
                 test: /\.ts$/,
                 enforce: "pre",
-                loader: "tslint-loader",
+                loader: "eslint-loader",
                 exclude: /(node_modules)/,
                 options: {
                     /* Loader options go here */

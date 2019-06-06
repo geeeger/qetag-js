@@ -1,9 +1,9 @@
-import { IWorkersProvider } from "worker-provider/lib/interface";
+import { WorkersProvider } from "worker-provider/lib/interface";
 import QETagBase from "./base";
-import { IQETagWorker, IQZFile } from "./interface";
-export default class QETagWorker extends QETagBase implements IQETagWorker {
-    workers: IWorkersProvider;
+import * as Interface from "./interface";
+export default class QETagWorker extends QETagBase implements Interface.QETagWorker {
+    workers: WorkersProvider;
     channel: string;
-    constructor(file: IQZFile, workers: IWorkersProvider);
+    constructor(file: Interface.QZFile, workers: WorkersProvider);
     get(): PromiseLike<string>;
 }

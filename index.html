@@ -17,6 +17,7 @@
     <input type="button" value="cacl it" id="b2">
     <h5>result:</h5>
     <div id="r2"></div>
+    <script src="https://cdn.jsdelivr.net/npm/worker-provider@2.0.0/lib/index.min.js"></script>
     <script>
         var f = document.querySelector('#f');
         var b1 = document.querySelector('#b1');
@@ -76,7 +77,7 @@
                 });
         };
 
-        var WorkerProvider = window.Qetag.WorkerProvider;
+        var WorkerProvider = window.WorkerProvider;
 
         var workers = new WorkerProvider('./worker/index.js');
 

@@ -1,7 +1,4 @@
-import {
-    IBlock,
-    IQZFile,
-} from "./interface";
+import * as Interface from "./interface";
 
 import Block from "./block";
 import { guid } from "./utils";
@@ -9,11 +6,11 @@ import { guid } from "./utils";
 const rExt = /\.([^.]+)$/;
 let uid = 1;
 
-export default class QZFile implements IQZFile {
+export default class QZFile implements Interface.QZFile {
     public file: File;
     public batch: string;
     public blockSize: number;
-    public blocks: IBlock[];
+    public blocks: Interface.Block[];
     public name: string;
     public lastModified: number;
     public ext: string;
@@ -55,7 +52,7 @@ export default class QZFile implements IQZFile {
         return slice.call(file, start, end);
     }
 
-    public getBlocks(): IBlock[] {
+    public getBlocks(): Interface.Block[] {
         if (this.blocks) {
             return this.blocks;
         }
@@ -73,7 +70,7 @@ export default class QZFile implements IQZFile {
         return blocks;
     }
 
-    public getBlockByIndex(index: number): IBlock {
+    public getBlockByIndex(index: number): Interface.Block {
         return this.getBlocks()[index];
     }
 }

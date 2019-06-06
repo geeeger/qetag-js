@@ -2,20 +2,16 @@ import Base64 = require("crypto-js/enc-base64");
 import LibWordArray = require("crypto-js/lib-typedarrays");
 import SHA1 = require("crypto-js/sha1");
 import log2 from "math-log2";
-import { IWorkersProvider } from "worker-provider/lib/interface";
+import { WorkersProvider } from "worker-provider/lib/interface";
 import QETagBase from "./base";
-import {
-    IBlock,
-    IQETagWorker,
-    IQZFile,
-} from "./interface";
+import * as Interface from "./interface";
 import { guid } from "./utils";
 
-export default class QETagWorker extends QETagBase implements IQETagWorker {
-    public workers: IWorkersProvider;
+export default class QETagWorker extends QETagBase implements Interface.QETagWorker {
+    public workers: WorkersProvider;
     public channel: string;
 
-    constructor(file: IQZFile, workers: IWorkersProvider) {
+    constructor(file: Interface.QZFile, workers: WorkersProvider) {
         super(file);
         this.workers = workers;
         this.channel = guid();
@@ -28,19 +24,19 @@ export default class QETagWorker extends QETagBase implements IQETagWorker {
         }
         this.workers.removeMessagesByChannel(this.channel);
         this.workers.removeAllListeners(this.channel);
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             const blocks = this.file.getBlocks();
             const blocksLength = blocks.length;
             let hashs: any[] = [];
             let hashsLength = 0;
-            this.workers.on(this.channel, (error: any, payload: any) => {
+            this.workers.on(this.channel, (error: any, payload: any): void => {
                 if (error) {
                     reject(new Error(payload));
                 }
                 hashs[payload.index] = payload.data;
                 hashsLength++;
                 if (hashsLength === blocksLength) {
-                    hashs = hashs.map((hash: string) => Base64.parse(hash));
+                    hashs = hashs.map((hash: string): any => Base64.parse(hash));
                     let perfex = log2(this.file.blockSize);
                     const isSmallFile = hashsLength === 1;
                     let result = null;
@@ -48,7 +44,7 @@ export default class QETagWorker extends QETagBase implements IQETagWorker {
                         result = hashs[0];
                     } else {
                         perfex = 0x80 | perfex;
-                        result = hashs.reduce((a, b) => a.concat(b));
+                        result = hashs.reduce((a, b): any => a.concat(b));
                         result = SHA1(result);
                     }
                     const byte = new ArrayBuffer(1);
@@ -65,7 +61,7 @@ export default class QETagWorker extends QETagBase implements IQETagWorker {
                     resolve(result);
                 }
             });
-            blocks.forEach((block: IBlock) => {
+            blocks.forEach((block: Interface.Block): void => {
                 this.workers.send({
                     channel: this.channel,
                     payload: {
