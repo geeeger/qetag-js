@@ -57,7 +57,7 @@
     "conventional-changelog-cli": "2.0.34",
     "eslint": "5.16.0",
     "eslint-loader": "2.2.1",
-    "husky": "2.7.0",
+    "husky": "4.2.5",
     "jest": "23.6.0",
     "rimraf": "2.6.3",
     "ts-jest": "23.10.5",
