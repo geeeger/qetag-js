@@ -65,7 +65,7 @@
     "typescript": "3.9.7",
     "uglifyjs-webpack-plugin": "2.2.0",
     "webpack": "4.43.0",
-    "webpack-cli": "3.3.6"
+    "webpack-cli": "3.3.12"
   },
   "dependencies": {
     "crypto-js": "3.1.9-1",
