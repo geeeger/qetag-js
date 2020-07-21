@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/geeeger/qetag-js#readme",
   "devDependencies": {
-    "@commitlint/cli": "7.6.1",
+    "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "7.6.0",
     "@types/bluebird": "3.5.32",
     "@types/crypto-js": "3.1.43",
