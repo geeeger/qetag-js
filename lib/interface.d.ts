@@ -24,7 +24,7 @@ export interface Block {
 export interface QETagBase {
     file: QZFile;
     hash: string;
-    get?(): PromiseLike<string>;
+    get(): Promise<string>;
     set(hash: string): void;
     getSync(): string;
 }

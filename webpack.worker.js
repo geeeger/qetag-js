@@ -5,6 +5,7 @@ module.exports = function() {
     return {
         entry: './src/wscript.ts',
         devtool: false,
+        target: 'web',
         resolve: {
             extensions: ['.ts', '.js'],
         },
@@ -35,6 +36,9 @@ module.exports = function() {
             minimizer: [
                 new UglifyJsPlugin()
             ]
+        },
+        externals: {
+            crypto: 'crypto'
         }
     };
 };

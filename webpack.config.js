@@ -7,6 +7,7 @@ const config = {
     resolve: {
         extensions: [".ts", ".js"],
     },
+    target: 'web',
     output: {
         filename: "index.js",
         path: path.resolve(__dirname, "lib"),
@@ -36,6 +37,9 @@ const config = {
             new UglifyJsPlugin()
         ],
     },
+    externals: {
+        crypto: 'crypto'
+    }
 };
 
 module.exports = () => {

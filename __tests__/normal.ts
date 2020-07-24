@@ -1,12 +1,9 @@
-import * as bluebird from "bluebird";
 import QZFile from "../src/file";
 import QETagNormal from "../src/normal";
 
 const file = new QZFile({
     file: new File(["1"], "", {type: "text/html"}),
 });
-
-QETagNormal.Promise = bluebird.Promise;
 
 jest.setTimeout(10000);
 

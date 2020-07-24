@@ -4,7 +4,7 @@ export default class Block implements Interface.Block {
     endByte: number;
     file: Interface.QZFile;
     constructor(file: Interface.QZFile, startByte: number, endByte: number);
-    readonly size: number;
-    readonly index: number;
-    readonly blob: Blob;
+    get size(): number;
+    get index(): number;
+    get blob(): Blob;
 }

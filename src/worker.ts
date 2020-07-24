@@ -17,8 +17,7 @@ export default class QETagWorker extends QETagBase implements Interface.QETagWor
         this.channel = guid();
     }
 
-    public get(): PromiseLike<string> {
-        const Promise = QETagWorker.Promise;
+    public get(): Promise<string> {
         if (this.hash) {
             return Promise.resolve(this.hash);
         }

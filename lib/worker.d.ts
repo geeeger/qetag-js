@@ -5,5 +5,5 @@ export default class QETagWorker extends QETagBase implements Interface.QETagWor
     workers: WorkersProvider;
     channel: string;
     constructor(file: Interface.QZFile, workers: WorkersProvider);
-    get(): PromiseLike<string>;
+    get(): Promise<string>;
 }

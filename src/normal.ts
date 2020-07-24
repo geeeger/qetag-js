@@ -15,8 +15,7 @@ export default class QETagNormal extends QETagBase implements Interface.QETagNor
         this.concurrency = concurrency;
     }
 
-    public loadNext(block: Interface.Block): PromiseLike<WordArray> {
-        const Promise = QETagNormal.Promise;
+    public loadNext(block: Interface.Block): Promise<WordArray> {
         return new Promise((resolve, reject): void => {
             const fr = new FileReader();
             fr.onload = (): void => {
@@ -38,8 +37,7 @@ export default class QETagNormal extends QETagBase implements Interface.QETagNor
         });
     }
 
-    public get(): PromiseLike<string> {
-        const Promise = QETagNormal.Promise;
+    public get(): Promise<string> {
         if (this.hash) {
             return Promise.resolve(this.hash);
         }
@@ -47,7 +45,7 @@ export default class QETagNormal extends QETagBase implements Interface.QETagNor
             this.file
                 .getBlocks()
                 // @ts-ignore
-                .map(throat(Promise).apply(this, [this.concurrency, (block: Interface.Block): PromiseLike<WordArray> => this.loadNext(block)])),
+                .map(throat(Promise).apply(this, [this.concurrency, (block: Interface.Block): Promise<WordArray> => this.loadNext(block)])),
         )
             // eslint-disable-next-line
             .then((hashs: any[]): string => {
