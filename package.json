@@ -61,7 +61,7 @@
     "jest": "23.6.0",
     "rimraf": "3.0.2",
     "ts-jest": "23.10.5",
-    "ts-loader": "8.0.1",
+    "ts-loader": "8.0.2",
     "typescript": "3.9.7",
     "uglifyjs-webpack-plugin": "2.2.0",
     "webpack": "4.44.1",
