@@ -54,7 +54,7 @@
     "acorn": "7.4.0",
     "bluebird": "3.7.2",
     "codecov": "3.7.2",
-    "conventional-changelog-cli": "2.0.34",
+    "conventional-changelog-cli": "2.1.0",
     "eslint": "5.16.0",
     "eslint-loader": "3.0.4",
     "husky": "4.2.5",
