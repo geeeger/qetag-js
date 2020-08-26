@@ -1,5 +1,6 @@
 node_modules/**/*
 lib/**/*
+worker/**/*
 coverage/**/*
 __tests__/**/*
 webpack.*
