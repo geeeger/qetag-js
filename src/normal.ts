@@ -10,7 +10,7 @@ import * as Interface from "./interface";
 export default class QETagNormal extends QETagBase implements Interface.QETagNormal {
     public concurrency: number;
 
-    constructor(file: Interface.QZFile, concurrency: number = 1) {
+    constructor(file: Interface.QZFile, concurrency = 1) {
         super(file);
         this.concurrency = concurrency;
     }

@@ -6,6 +6,12 @@ import { guid } from "./utils";
 const rExt = /\.([^.]+)$/;
 let uid = 1;
 
+type Props = {
+    file?: File
+    blockSize?: number
+    batch?: string
+}
+
 export default class QZFile implements Interface.QZFile {
     public file: File;
     public batch: string;
@@ -18,10 +24,10 @@ export default class QZFile implements Interface.QZFile {
     public type: string;
 
     constructor({
-        file = null,
+        file,
         blockSize = 4 * 1024 * 1024,
         batch = guid(),
-    }) {
+    }: Props) {
         if (!file) {
             throw new Error("QZFile: no file provided!");
         }

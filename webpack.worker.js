@@ -1,18 +1,17 @@
 const path = require('path');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = function() {
     return {
         entry: './src/wscript.ts',
         devtool: false,
-        target: 'web',
+        target: 'webworker',
         resolve: {
             extensions: ['.ts', '.js'],
         },
         output: {
             filename: 'index.js',
-            path: path.resolve(__dirname, 'worker'),
-            libraryTarget: 'var',
+            path: path.resolve(__dirname, 'worker')
         },
         module: {
             rules: [
@@ -34,7 +33,7 @@ module.exports = function() {
         },
         optimization: {
             minimizer: [
-                new UglifyJsPlugin()
+                new TerserPlugin()
             ]
         },
         externals: {

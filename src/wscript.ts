@@ -4,7 +4,7 @@ import SHA1 = require("crypto-js/sha1");
 
 const postMessageFunction = self.postMessage;
 
-export function sha1(payload, channel, postMessage): void {
+export function sha1(payload: any, channel: string, postMessage: Worker["postMessage"]): void {
     const fr = new FileReader();
     fr.onload = (): void => {
         if (fr.result) {
@@ -32,7 +32,7 @@ export function sha1(payload, channel, postMessage): void {
     fr.readAsArrayBuffer(payload.blob);
 }
 
-export function handler(data: any, postMessage): void {
+export function handler(data: any, postMessage: Worker["postMessage"]): void {
     const { payload, channel } = data;
 
     if (typeof FileReader === "undefined") {

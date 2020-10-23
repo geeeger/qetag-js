@@ -40,7 +40,7 @@ it("should get file property", () => {
     const file2 = new QZFile({
         batch: "testguid",
         blockSize: 2 * 1024 * 1024,
-        file: new Blob(["1"]),
+        file: new Blob(["1"]) as File,
     });
     expect(file2.blockSize).toBe(2 * 1024 * 1024);
     expect(file2.batch).toBe("testguid");

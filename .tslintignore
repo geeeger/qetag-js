@@ -1,7 +1,0 @@
-node_modules/**/*
-lib/**/*
-coverage/**/*
-__tests__/**/*
-webpack.*
-jest.*
-commitlint.*
