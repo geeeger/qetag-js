@@ -1,3 +1,12 @@
+# [2.2.0](https://github.com/geeeger/qetag-js/compare/v2.1.0...v2.2.0) (2020-10-23)
+
+
+### Features
+
+* **build:** upgrade webpack5 ([fe70df8](https://github.com/geeeger/qetag-js/commit/fe70df88971c9c2f66ecbf760c15357cdb2cc5f6))
+
+
+
 # [2.1.0](https://github.com/geeeger/qetag-js/compare/v2.0.2...v2.1.0) (2020-08-26)
 
 
