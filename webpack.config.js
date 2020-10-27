@@ -1,5 +1,6 @@
 const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 const config = {
     entry: "./src/index.ts",
@@ -21,17 +22,19 @@ const config = {
                 use: ["ts-loader"],
                 enforce: "pre",
             },
-            {
-                test: /\.ts$/,
-                enforce: "pre",
-                loader: "eslint-loader",
-                exclude: /(node_modules)/,
-                options: {
-                    /* Loader options go here */
-                },
-            },
         ],
     },
+    plugins: [
+        new ESLintWebpackPlugin({
+            context: 'src',
+            extensions: ['ts'],
+            emitWarning: true,
+            emitError: true,
+            failOnError: true,
+            failOnWarning: false,
+            fix: true
+        })
+    ],
     optimization: {
         minimizer: [
             new TerserPlugin()

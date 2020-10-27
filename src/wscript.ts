@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import Base64 = require("crypto-js/enc-base64");
 import WordArray = require("crypto-js/lib-typedarrays");
 import SHA1 = require("crypto-js/sha1");
